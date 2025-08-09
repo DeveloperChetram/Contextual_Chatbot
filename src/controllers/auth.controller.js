@@ -1,5 +1,10 @@
-const registerController = async (req, res) => {
+const registerGetController = async (req, res) => {
     res.render('register');
 }
 
-module.exports = {registerController};
+const registerPostController = async (req, res)=>{
+const {username, email, password}= req.body;
+
+}
+
+module.exports = {registerGetController, registerPostController};

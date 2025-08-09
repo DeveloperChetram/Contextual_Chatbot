@@ -1,47 +1,29 @@
+/* public/styles/theme.css */
+
 :root {
+  /* Dark Theme (Default) - Inspired by the provided image */
+  --bg1: #100f14;
+  --bg-gradient: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(120, 40, 200, 0.3), transparent);
+  --glass-bg: rgba(26, 25, 31, 0.5);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --text: #f0f2f5;
+  --muted: #a1a1aa;
+  --brand: #8a3ffc; /* A vibrant purple from the image */
+  --accent: var(--brand);
+  --danger: #ef4444;
+  --ok: #22c55e;
+  --radius: 12px;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
     /* Light Theme */
-    --primary: #2d6cdf;
-    --primary-hover: #1a4fa3;
-    --background: #f7f8fa;
-    --card-bg: #fff;
-    --input-bg: #f2f3f7;
-    --input-border: #d1d5db;
-    --text: #222;
-    --button-text: #fff;
-    --error: #e74c3c;
-    --success: #27ae60;
-}
-
-.theme-dark {
-    --primary: #7ab7ff;
-    --primary-hover: #4a90e2;
-    --background: #181c24;
-    --card-bg: #232a36;
-    --input-bg: #232a36;
-    --input-border: #3a4252;
-    --text: #f7f8fa;
-    --button-text: #232a36;
-    --error: #ff7675;
-    --success: #00b894;
-}
-
-.theme-light {
-    /* Redefine for clarity, but same as :root */
-    --primary: #2d6cdf;
-    --primary-hover: #1a4fa3;
-    --background: #f7f8fa;
-    --card-bg: #fff;
-    --input-bg: #f2f3f7;
-    --input-border: #d1d5db;
-    --text: #222;
-    --button-text: #fff;
-    --error: #e74c3c;
-    --success: #27ae60;
-}
-
-body {
-    background: var(--background);
-    color: var(--text);
-    font-family: 'Inter', Arial, sans-serif;
-    transition: background 0.3s, color 0.3s;
+    --bg1: #f9f9fb;
+    --bg-gradient: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(120, 40, 200, 0.1), transparent);
+    --glass-bg: rgba(255, 255, 255, 0.8);
+    --glass-border: rgba(0, 0, 0, 0.08);
+    --text: #100f14;
+    --muted: #52525b;
+  }
 }
