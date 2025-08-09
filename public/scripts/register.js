@@ -18,8 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Simple client-side validation demo for registration
   $("#registerForm").addEventListener("submit", (e) => {
-    e.preventDefault();
-    const name = $("#name").value.trim();
+    // e.preventDefault();
+    const username = $("#username").value.trim();
     const email = $("#email").value.trim();
     const pass = $("#password").value.trim();
     const passConfirm = $("#passwordConfirm").value.trim();
@@ -27,8 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Validation flags
     let ok = true;
 
-    if (name.length < 2){
-      hint($("#name"), "Please enter your full name");
+    if (username.length < 2){
+      hint($("#username"), "Please enter your full username");
       ok = false;
     }
     if (!/^\S+@\S+\.\S+$/.test(email)){
@@ -47,10 +47,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Simulate registration process
     loading(true);
-    setTimeout(() => {
-      loading(false);
-      alert("Account created successfully!");
-    }, 900);
+    // setTimeout(() => {
+    //   loading(false);
+    //   alert("Account created successfully!");
+    // }, 900);
   });
 
   function hint(input, msg){
