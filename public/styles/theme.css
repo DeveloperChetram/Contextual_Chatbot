@@ -1,0 +1,47 @@
+:root {
+    /* Light Theme */
+    --primary: #2d6cdf;
+    --primary-hover: #1a4fa3;
+    --background: #f7f8fa;
+    --card-bg: #fff;
+    --input-bg: #f2f3f7;
+    --input-border: #d1d5db;
+    --text: #222;
+    --button-text: #fff;
+    --error: #e74c3c;
+    --success: #27ae60;
+}
+
+.theme-dark {
+    --primary: #7ab7ff;
+    --primary-hover: #4a90e2;
+    --background: #181c24;
+    --card-bg: #232a36;
+    --input-bg: #232a36;
+    --input-border: #3a4252;
+    --text: #f7f8fa;
+    --button-text: #232a36;
+    --error: #ff7675;
+    --success: #00b894;
+}
+
+.theme-light {
+    /* Redefine for clarity, but same as :root */
+    --primary: #2d6cdf;
+    --primary-hover: #1a4fa3;
+    --background: #f7f8fa;
+    --card-bg: #fff;
+    --input-bg: #f2f3f7;
+    --input-border: #d1d5db;
+    --text: #222;
+    --button-text: #fff;
+    --error: #e74c3c;
+    --success: #27ae60;
+}
+
+body {
+    background: var(--background);
+    color: var(--text);
+    font-family: 'Inter', Arial, sans-serif;
+    transition: background 0.3s, color 0.3s;
+}
