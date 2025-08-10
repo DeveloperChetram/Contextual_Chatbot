@@ -39,5 +39,33 @@ const getLoginController= async(req, res)=>{
 }
 const postLoginController = async (req, res)=>{
      const {email_username , password} = req.body
+console.log(req.body)
+     const user = await userModel.findOne({
+        // :[
+
+        //     {username:email_username},
+        //     {email:email_username}
+        // ]
+       username: email_username
+     }) 
+console.log(user)
+     if(!user){
+        return res.redirect('/auth/login?error=user not found');
+     }
+
+     const isPasswordValid = await bcrypt.compare(password, user.password)
+
+     if(!isPasswordValid){
+        return res.status(401).json({
+            message:"wrong password"
+        })
+     }
+
+     const token = jwt.sign({id:user._id}, process.env.JWT_SECRET)
+     res.cookie('token', token)
+     res.status(200).json({
+        message:'user logged in successfully'
+     })
+
 }
 module.exports = {getRegisterController, postRegisterController, getLoginController, postLoginController};

@@ -1,59 +1,92 @@
 const $ = (q, s = document) => s.querySelector(q);
 
 document.addEventListener('DOMContentLoaded', () => {
-  $("#loginForm").addEventListener("submit", (e) => {
-    let ok = true;
+  const loginForm = $("#loginForm");
+  const usernameInput = $("#email");
+  const passwordInput = $("#password");
+  const submitButton = $(".btn.primary");
+
+  // --- Start of Corrected Code ---
+
+  // 1. Disable the button initially.
+  submitButton.disabled = true;
+
+  // 2. Create a single validation function to be called on input.
+  const validateForm = () => {
+    // Clear previous errors to avoid stacking messages
     document.querySelectorAll('.field-error').forEach(el => el.remove());
-    const username = $("#username").value.trim();
-    const pass = $("#password").value.trim();
 
-    // Username validation: at least 2 chars, no spaces, cannot start with number or hyphen, only letters, numbers, underscores
+    let isFormValid = true;
+
+    // --- Username/Email Validation ---
+    const username = usernameInput.value.trim();
     if (username.length < 2) {
-      hint($("#username"), "Please enter your username");
-      ok = false;
+      hint(usernameInput, "Username or email is required.");
+      isFormValid = false;
     } else if (/\s/.test(username)) {
-      hint($("#username"), "Username cannot contain spaces");
-      ok = false;
-    } else if (/^[0-9\-]/.test(username)) {
-      hint($("#username"), "Username cannot start with a number or hyphen");
-      ok = false;
-    } else if (!/^[A-Za-z][A-Za-z0-9_]*$/.test(username)) {
-      hint($("#username"), "Username can only contain letters, numbers, and underscores, and must start with a letter");
-      ok = false;
+      hint(usernameInput, "Input cannot contain spaces.");
+      isFormValid = false;
     }
 
+    // --- Password Validation ---
+    const pass = passwordInput.value.trim();
     if (pass.length < 6) {
-      hint($("#password"), "Password must be at least 6 characters");
-      ok = false;
+      hint(passwordInput, "Password must be at least 6 characters.");
+      isFormValid = false;
     }
 
-    if (!ok) {
-      e.preventDefault();
+    // 3. Enable or disable the button based on the overall form validity.
+    submitButton.disabled = !isFormValid;
+    return isFormValid;
+  };
+
+  // 4. Add event listeners to validate as the user types.
+  usernameInput.addEventListener('input', validateForm);
+  passwordInput.addEventListener('input', validateForm);
+
+  // 5. Add a submit listener as a final check.
+  loginForm.addEventListener("submit", (e) => {
+    // Run validation one last time on submission attempt
+    if (!validateForm()) {
+      e.preventDefault(); // Stop submission if invalid
       return;
     }
     loading(true);
   });
+  
+  // --- End of Corrected Code ---
 
   function hint(input, msg) {
     const field = input.closest('.field');
+    // Ensure no duplicate error messages
+    const existingError = field.querySelector('.field-error');
+    if (existingError) {
+      existingError.remove();
+    }
+    
     const errorDisplay = document.createElement('p');
     errorDisplay.className = 'field-error';
     errorDisplay.textContent = msg;
     errorDisplay.style.color = 'var(--danger)';
     errorDisplay.style.fontSize = '12px';
     errorDisplay.style.marginTop = '4px';
-    const existingError = field.querySelector('.field-error');
-    if (existingError) {
-      existingError.remove();
-    }
+    
     field.appendChild(errorDisplay);
-    input.focus();
   }
 
   function loading(state) {
-    const btn = $(".btn.primary");
-    btn.disabled = state;
-    btn.style.opacity = state ? "0.7" : "1";
-    btn.textContent = state ? "Logging in…" : "Login";
+    submitButton.disabled = state;
+    submitButton.style.opacity = state ? "0.7" : "1";
+    submitButton.textContent = state ? "Logging in…" : "Sign In";
+  }
+
+  // Also handle password visibility toggle
+  const toggle = $(".field.password .toggle");
+  if (toggle) {
+      toggle.addEventListener("click", () => {
+          const on = passwordInput.type === "password";
+          passwordInput.type = on ? "text" : "password";
+          toggle.classList.toggle("active", on);
+      });
   }
 });
