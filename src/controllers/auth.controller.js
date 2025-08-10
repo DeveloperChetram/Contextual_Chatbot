@@ -41,12 +41,12 @@ const postLoginController = async (req, res)=>{
      const {email_username , password} = req.body
 console.log(req.body)
      const user = await userModel.findOne({
-        // :[
+      $or:[
 
-        //     {username:email_username},
-        //     {email:email_username}
-        // ]
-       username: email_username
+            {username:email_username},
+            {email:email_username}
+        ]
+    //    username: email_username
      }) 
 console.log(user)
      if(!user){

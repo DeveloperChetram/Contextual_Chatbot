@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Chat</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles/theme.css" />
+    <link rel="stylesheet" href="/styles/home.css" />
+</head>
+<body>
+    <div class="chat-container">
+        <aside class="sidebar left-sidebar" id="left-sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <span>Script</span>
+                </div>
+                <button class="close-btn" id="close-left-sidebar" aria-label="Close menu">&times;</button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active"><span>AI Chat</span></a>
+                <a href="#" class="nav-item"><span>Projects</span></a>
+                <a href="#" class="nav-item"><span>Documents</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <img src="https://i.pravatar.cc/40" alt="User Avatar" />
+                    <div class="user-info">
+                        <span class="name">Emilia Caitlin</span>
+                        <span class="email">hey@emilia.co</span>
+                    </div>
+                    <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme">
+                        ☀️
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+             <header class="main-header">
+                <div class="mobile-header">
+                    <button class="menu-toggle" id="menu-toggle" aria-label="Open menu">☰</button>
+                    <h2>AI Chat</h2>
+                    <button class="menu-toggle" id="history-toggle" aria-label="Open history">🕒</button>
+                </div>
+                <div class="welcome-header">
+                    <h2>Welcome to Script</h2>
+                    <p>Get started by asking a question.</p>
+                </div>
+            </header>
+            
+            <div class="chat-messages" id="chat-messages">
+                </div>
+
+            <div class="chat-input-container">
+                <div class="chat-input-area">
+                    <form id="chat-form">
+                        <textarea id="chat-input" placeholder="Summarize the latest..." rows="1"></textarea>
+                        <button type="submit" class="send-btn" aria-label="Send message">▲</button>
+                    </form>
+                    <div class="input-actions">
+                        <div class="action-buttons">
+                            <button>📎 Attach</button>
+                            <button>🎙️ Voice Message</button>
+                            <button>🔍 Browse Prompts</button>
+                        </div>
+                        <div class="char-count" id="char-count">0 / 3000</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <aside class="sidebar right-sidebar" id="right-sidebar">
+            <div class="sidebar-header">
+                <h3>History</h3>
+                <button class="new-chat-btn">New Chat</button>
+            </div>
+            <ul class="history-list">
+                <li>Learning From 100 Years...</li>
+                <li>Research efficiants</li>
+                <li>What does a senior lead de...</li>
+                <li>Write a sweet note to your...</li>
+                <li>Meet with cake bakers</li>
+            </ul>
+        </aside>
+    </div>
+
+    <script src="/scripts/home.js"></script>
+</body>
+</html>

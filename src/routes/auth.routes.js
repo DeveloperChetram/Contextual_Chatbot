@@ -11,4 +11,9 @@ authRouter.route('/register')
 authRouter.route('/login')
 .get(getLoginController)
 .post(postLoginController)
+
+
+
 module.exports = authRouter;
+
+
