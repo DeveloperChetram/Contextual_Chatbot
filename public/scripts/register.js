@@ -1,92 +1,86 @@
-const $ = (q, s=document) => s.querySelector(q);
+// public/scripts/register.js
+const $ = (q, s = document) => s.querySelector(q);
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Current year
-  $("#year").textContent = new Date().getFullYear();
-
-  // Password toggle buttons (both fields)
+  // Password toggle buttons
   const toggles = document.querySelectorAll(".field.password .toggle");
-  toggles.forEach((toggle, idx) => {
+  toggles.forEach((toggle) => {
     toggle.addEventListener("click", () => {
       const pwdInput = toggle.previousElementSibling;
       const on = pwdInput.type === "password";
       pwdInput.type = on ? "text" : "password";
       toggle.classList.toggle("active", on);
-      toggle.setAttribute("aria-pressed", on ? "true" : "false");
     });
   });
 
-  // Simple client-side validation demo for registration
+  // --- Start of Corrected Code ---
   $("#registerForm").addEventListener("submit", (e) => {
-    e.preventDefault();
-    const name = $("#name").value.trim();
+    let ok = true; // Validation flag
+
+    // Clear previous errors
+    document.querySelectorAll('.field-error').forEach(el => el.remove());
+
+    const username = $("#username").value.trim();
     const email = $("#email").value.trim();
     const pass = $("#password").value.trim();
-    const passConfirm = $("#passwordConfirm").value.trim();
 
-    // Validation flags
-    let ok = true;
-
-    if (name.length < 2){
-      hint($("#name"), "Please enter your full name");
+    // Username validation: at least 2 chars, no spaces, cannot start with number or hyphen, only letters, numbers, underscores
+    if (username.length < 2) {
+      hint($("#username"), "Please enter your username");
+      ok = false;
+    } else if (/\s/.test(username)) {
+      hint($("#username"), "Username cannot contain spaces");
+      ok = false;
+    } else if (/^[0-9\-]/.test(username)) {
+      hint($("#username"), "Username cannot start with a number or hyphen");
+      ok = false;
+    } else if (!/^[A-Za-z][A-Za-z0-9_]*$/.test(username)) {
+      hint($("#username"), "Username can only contain letters, numbers, and underscores, and must start with a letter");
       ok = false;
     }
-    if (!/^\S+@\S+\.\S+$/.test(email)){
+    if (!/^\S+@\S+\.\S+$/.test(email)) {
       hint($("#email"), "Please enter a valid email");
       ok = false;
     }
-    if (pass.length < 6){
+    if (pass.length < 6) {
       hint($("#password"), "Password must be at least 6 characters");
       ok = false;
     }
-    if (pass !== passConfirm){
-      hint($("#passwordConfirm"), "Passwords do not match");
-      ok = false;
+
+    if (!ok) {
+      // **CRITICAL FIX**: Prevent the form from submitting if validation fails
+      e.preventDefault(); 
+      return;
     }
-    if (!ok) return;
-
-    // Simulate registration process
+    
+    // If validation is ok, show loading state and let the form submit
     loading(true);
-    setTimeout(() => {
-      loading(false);
-      alert("Account created successfully!");
-    }, 900);
   });
+  // --- End of Corrected Code ---
 
-  function hint(input, msg){
+  function hint(input, msg) {
+    const field = input.closest('.field');
+    const errorDisplay = document.createElement('p');
+    errorDisplay.className = 'field-error';
+    errorDisplay.textContent = msg;
+    errorDisplay.style.color = 'var(--danger)';
+    errorDisplay.style.fontSize = '12px';
+    errorDisplay.style.marginTop = '4px';
+    
+    // Remove existing error before adding a new one
+    const existingError = field.querySelector('.field-error');
+    if (existingError) {
+      existingError.remove();
+    }
+    
+    field.appendChild(errorDisplay);
     input.focus();
-    input.style.borderColor = "rgba(239, 68, 68, 0.9)";
-    input.style.boxShadow = "0 0 0 6px rgba(239, 68, 68, 0.15)";
-    toast(msg);
-    setTimeout(() => {
-      input.style.borderColor = "";
-      input.style.boxShadow = "";
-    }, 1400);
   }
 
-  function loading(state){
+  function loading(state) {
     const btn = $(".btn.primary");
     btn.disabled = state;
     btn.style.opacity = state ? "0.7" : "1";
-    btn.textContent = state ? "Registering…" : "Register";
-  }
-
-  // Minimal toast
-  function toast(text){
-    const t = document.createElement("div");
-    t.textContent = text;
-    t.style.position = "fixed";
-    t.style.left = "50%";
-    t.style.top = "24px";
-    t.style.transform = "translateX(-50%)";
-    t.style.background = "rgba(0,0,0,0.8)";
-    t.style.color = "#fff";
-    t.style.padding = "10px 14px";
-    t.style.borderRadius = "10px";
-    t.style.fontSize = "14px";
-    t.style.zIndex = "9999";
-    t.style.boxShadow = "0 8px 24px rgba(0,0,0,0.35)";
-    document.body.appendChild(t);
-    setTimeout(() => t.remove(), 1600);
+    btn.textContent = state ? "Creating Account…" : "Create Account";
   }
 });
