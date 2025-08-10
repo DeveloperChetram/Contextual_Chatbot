@@ -2,11 +2,11 @@ const jwt  = require("jsonwebtoken");
 const userModel = require("../models/user.model");
 const bcrypt = require('bcryptjs')
 
-const registerGetController = async (req, res) => {
+const getRegisterController = async (req, res) => {
     res.render('register');
 }
 
-const registerPostController = async (req, res)=>{
+const postRegisterController = async (req, res)=>{
     
 const {username, email, password}= req.body;
 
@@ -34,4 +34,10 @@ res.status(201).json({
 
 }
 
-module.exports = {registerGetController, registerPostController};
+const getLoginController= async(req, res)=>{
+    res.render('login')
+}
+const postLoginController = async (req, res)=>{
+     const {email_username , password} = req.body
+}
+module.exports = {getRegisterController, postRegisterController, getLoginController, postLoginController};
