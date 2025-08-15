@@ -65,7 +65,7 @@
                             <button>🎙️ Voice Message</button>
                             <button>🔍 Browse Prompts</button>
                         </div>
-                        <div class="char-count" id="char-count">0 / 3000</div>
+                        <div class="char-count" id="char-count">0 </div>
                     </div>
                 </div>
             </div>
@@ -86,6 +86,11 @@
         </aside>
     </div>
 
+<script src="https://cdn.socket.io/4.8.1/socket.io.min.js" integrity="sha384-mkQ3/7FUtcGyoppY6bz/PORYoGqOl7/aSUMn2ymDOJcapfS6PHqxhRTMh1RR0Q6+" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/lib/marked.umd.js"></script>
+    <script>
+       const socket = io();
+   </script>
     <script src="/scripts/home.js"></script>
 </body>
 </html>

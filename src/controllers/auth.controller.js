@@ -6,6 +6,8 @@ const getRegisterController = async (req, res) => {
     res.render('register');
 }
 
+
+
 const postRegisterController = async (req, res)=>{
     
 const {username, email, password}= req.body;
@@ -27,16 +29,17 @@ const user = await userModel.create({
 })
 const token = jwt.sign({id:user._id}, process.env.JWT_SECRET)
 res.cookie('token', token)
-res.status(201).json({
-    message:"user created succesfully",
-     user
-})
+res.redirect('/')
 
 }
+
+
 
 const getLoginController= async(req, res)=>{
     res.render('login')
 }
+
+
 const postLoginController = async (req, res)=>{
      const {email_username , password} = req.body
 console.log(req.body)
@@ -63,9 +66,12 @@ console.log(user)
 
      const token = jwt.sign({id:user._id}, process.env.JWT_SECRET)
      res.cookie('token', token)
-     res.status(200).json({
-        message:'user logged in successfully'
-     })
+     res.status(200).redirect('/')
 
 }
-module.exports = {getRegisterController, postRegisterController, getLoginController, postLoginController};
+
+const getLogoutController = async (req, res)=>{
+    res.clearCookie('token')
+    res.redirect('/')
+} 
+module.exports = {getRegisterController, postRegisterController, getLoginController, postLoginController, getLogoutController};

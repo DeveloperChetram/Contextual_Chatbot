@@ -13,7 +13,14 @@ app.use(cookieParser())
 app.use(express.static('public'))
 app.set('view engine', 'ejs')
 
+app.get('/',(req,res)=>{
+    const {token}= req.cookies;
+    if(!token){
 
+    return  res.redirect('/auth/login')
+    }
+    res.redirect('/home')
+})
 app.use('/auth', authRouter)
 app.use('/home', homeRouter)
 

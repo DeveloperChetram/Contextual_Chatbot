@@ -1,6 +1,8 @@
 // public/scripts/home.js
+ // Correct
 document.addEventListener('DOMContentLoaded', () => {
     // --- Element Selectors ---
+
     const menuToggle = document.getElementById('menu-toggle');
     const historyToggle = document.getElementById('history-toggle');
     const leftSidebar = document.getElementById('left-sidebar');
@@ -45,34 +47,50 @@ document.addEventListener('DOMContentLoaded', () => {
             chatInput.style.height = `${chatInput.scrollHeight}px`;
         });
     }
-
+// const isLoading = false;
     // --- Chat Form Submission ---
+    
     if (chatForm) {
         chatForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const messageText = chatInput.value.trim();
             if (messageText) {
                 addMessage(messageText, 'user');
+                // console.log(socket)
+          try {
+                  socket.emit('user-message', messageText)
+          } catch (error) {
+            console.log(error)
+          }
                 chatInput.value = '';
                 chatInput.style.height = 'auto'; // Reset height after send
-                charCount.textContent = '0 / 3000'; // Reset char count
+                charCount.textContent = '0'; // Reset char count
 
-                setTimeout(() => {
-                    addMessage('This is a simulated response.', 'ai');
-                }, 1000);
+            //  setTimeout(() => {
+            //         addMessage('This is a simulated response.', 'ai');
+            //     }, 1000);
+socket.on('ai-response', (data) => {
+    try {
+        addMessage(marked.parse(data), 'ai');
+    } catch (error) {
+        console.error('Error handling ai-response:', error);
+    }
+});
+
             }
         });
     }
 
    
     function addMessage(text, sender) {
+
         let messageElement;
 
         if (sender === 'user') {
             // Create a simple div for the user's message
             messageElement = document.createElement('div');
             messageElement.className = 'message user-message';
-            messageElement.textContent = text;
+            messageElement.innerHTML = text;
         } else {
             // Create a container for the AI's response (header + body)
             messageElement = document.createElement('div');
@@ -81,12 +99,12 @@ document.addEventListener('DOMContentLoaded', () => {
             // Create the "AI Response" header
             const aiHeader = document.createElement('div');
             aiHeader.className = 'ai-header';
-            aiHeader.textContent = 'AI Response';
+            aiHeader.innerHTML = 'AI Response';
 
             // Create the body of the AI's message
             const aiBody = document.createElement('div');
             aiBody.className = 'message ai-message';
-            aiBody.textContent = text;
+            aiBody.innerHTML = text;
 
             // Append header and body to the container
             messageElement.appendChild(aiHeader);
